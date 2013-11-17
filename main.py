@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import sys
 import ship
+import enemy
 
 pygame.init()
 
@@ -11,7 +12,24 @@ pygame.display.flip()
 #Initialize clock to control framerate
 clock = pygame.time.Clock()
 
+#List of all sprites in the game
+all_sprites_list = pygame.sprite.Group()
+
+#Collidable objects for the player
+collide_sprites_list = pygame.sprite.Group()
+
+
+
 player_ship = ship.Ship(240, 600)
+all_sprites_list.add(player_ship)
+
+for i in range(10):
+    #Create a new enemy
+    enemy_ufo = enemy.Enemy()
+
+    #Add the sprites to the sprite lists
+    all_sprites_list.add(enemy_ufo)
+    collide_sprites_list.add(enemy_ufo)
 
 bullets = []
 
@@ -20,18 +38,27 @@ def main():
         clock.tick(60)
         for event in pygame.event.get():
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
+                if event.key == K_ESCAPE or event.type == pygame.QUIT:
                     sys.exit()
                 if event.key == K_SPACE:
-                    print 'SHOOT'
-                    bullets.append(ship.Bullet(player_ship.x, player_ship.y, screen))
-        screen.fill((0,0,0))
-        player_ship.controls(screen)
-        player_ship.draw(screen)
+                    bullet = ship.Bullet(player_ship.rect.x, player_ship.rect.y, screen)
+                    bullets.append(bullet)
+                    all_sprites_list.add(bullet)
+
+        screen.fill((0, 0, 0))
+        player_ship.controls()
 
         for i in range(len(bullets)):
-            bullets[i].update()
-            bullets[i].draw(screen)
+            sprite_hit_list = pygame.sprite.spritecollide(bullets[i], collide_sprites_list, True)
+
+
+
+
+
+
+        all_sprites_list.update()
+        all_sprites_list.draw(screen)
+
 
         pygame.display.update()
 
