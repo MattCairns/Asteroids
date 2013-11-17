@@ -1,4 +1,6 @@
 Asteroids
+Created by: Matthew Cairns
+Version: 0.01
 =========
 
 A version of asteroids game created by Matthew Cairns.
