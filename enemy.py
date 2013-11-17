@@ -1,16 +1,18 @@
 import pygame
 from pygame.locals import *
+import random
 
 
 class Enemy(pygame.sprite.Sprite):
     """All of the logic for the players ship is contained
         within this class"""
 
-    def __init__(self, x, y):
+    def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.ship = pygame.image.load('Assets/ufodark.png').convert()
-        self.y = y
-        self.x = x
+        self.image = pygame.image.load('Assets/ufodark.png').convert_alpha()
+        self.rect = self.image.get_rect()
+        self.rect.y = random.randint(80, 400) * -1
+        self.rect.x = random.randint(0, 480)
 
-    def draw(self, screen):
-        screen.blit(self.ship, (self.x, self.y))
+    def update(self):
+        self.rect.y += 2
