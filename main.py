@@ -7,7 +7,7 @@ import enemy
 pygame.init()
 
 #Set screen resolution
-screen = pygame.display.set_mode((480, 800))
+screen = pygame.display.set_mode((800, 600))
 pygame.display.flip()
 #Initialize clock to control framerate
 clock = pygame.time.Clock()
@@ -20,8 +20,7 @@ collide_sprites_list = pygame.sprite.Group()
 
 
 
-player_ship = ship.Ship(240, 600)
-all_sprites_list.add(player_ship)
+player_ship = ship.Ship(400, 300)
 
 for i in range(10):
     #Create a new enemy
@@ -52,12 +51,12 @@ def main():
             sprite_hit_list = pygame.sprite.spritecollide(bullets[i], collide_sprites_list, True)
 
 
-
-
-
-
         all_sprites_list.update()
         all_sprites_list.draw(screen)
+
+        player_ship.check()
+        player_ship.update_angle(screen)
+        player_ship.update()
 
 
         pygame.display.update()
