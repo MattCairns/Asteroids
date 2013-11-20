@@ -22,13 +22,13 @@ collide_sprites_list = pygame.sprite.Group()
 
 player_ship = ship.Ship(400, 300)
 
-for i in range(10):
-    #Create a new enemy
-    enemy_ufo = enemy.Enemy()
-
-    #Add the sprites to the sprite lists
-    all_sprites_list.add(enemy_ufo)
-    collide_sprites_list.add(enemy_ufo)
+#for i in range(10):
+#    #Create a new enemy
+#    enemy_ufo = enemy.Enemy()
+#
+#    #Add the sprites to the sprite lists
+#    all_sprites_list.add(enemy_ufo)
+#    collide_sprites_list.add(enemy_ufo)
 
 bullets = []
 
