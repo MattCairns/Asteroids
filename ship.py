@@ -14,8 +14,8 @@ class Ship(pygame.sprite.Sprite):
         self.rect.y = y
         self.rect.x = x
 
-        self.vel_y = 0
-        self.vel_x = 0
+        self.vel_y = 0.0
+        self.vel_x = 0.0
 
         self.velocity = 0.1
         self.friction = 0.98
@@ -47,7 +47,7 @@ class Ship(pygame.sprite.Sprite):
             self.current_angle = 0
 
     def update_angle(self, screen):
-        rot_image = pygame.transform.rotate(self.image, self.current_angle)
+        rot_image = pygame.transform.rotozoom(self.image, self.current_angle, 1)
         rot_rect = rot_image.get_rect(center=self.rect.center)
         screen.blit(rot_image, (self.rect.x, self.rect.y))
 
