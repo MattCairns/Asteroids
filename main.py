@@ -40,19 +40,16 @@ def main():
                 if event.key == K_ESCAPE or event.type == pygame.QUIT:
                     sys.exit()
                 if event.key == K_SPACE:
-                    bullet = ship.Bullet(player_ship.rect.x, player_ship.rect.y, screen)
+                    bullet = ship.Bullet(player_ship.rect.x, player_ship.rect.y, player_ship.get_ship_angle())
                     bullets.append(bullet)
-                    all_sprites_list.add(bullet)
 
         screen.fill((0, 0, 0))
         player_ship.controls()
 
         for i in range(len(bullets)):
             sprite_hit_list = pygame.sprite.spritecollide(bullets[i], collide_sprites_list, True)
-
-
-        all_sprites_list.update()
-        all_sprites_list.draw(screen)
+            bullets[i].update()
+            bullets[i].draw(screen)
 
         player_ship.check()
         player_ship.update_angle(screen)
