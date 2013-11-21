@@ -93,7 +93,7 @@ class Bullet(pygame.sprite.Sprite):
     def draw(self, screen):
         rot_image = pygame.transform.rotozoom(self.image, self.bullet_angle, 1)
         rot_image.get_rect().center = rot_image.get_rect().center
-        screen.blit(rot_image, (self.rect.x + 25, self.rect.y + 25))
+        screen.blit(rot_image, (self.rect.x, self.rect.y))
 
 
 
