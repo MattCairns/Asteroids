@@ -9,7 +9,7 @@ class Ship(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('Assets/starship.png').convert()
+        self.image = pygame.image.load('Assets/starship.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.y = y
         self.rect.x = x
@@ -62,9 +62,8 @@ class Ship(pygame.sprite.Sprite):
 
     def draw(self, screen):
         rot_image = pygame.transform.rotozoom(self.image, self.current_angle, 1)
-        rot_image.get_rect().center = rot_image.get_rect().center
-        rot_image.get_rect().center = (25, 25)
-        screen.blit(rot_image, (self.rect.x, self.rect.y))
+        rect = rot_image.get_rect().center
+        screen.blit(rot_image, (self.rect.x-(rect[1]), self.rect.y-(rect[0])))
 
 
 class Bullet(pygame.sprite.Sprite):
