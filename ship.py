@@ -9,7 +9,7 @@ class Ship(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('Assets/starship.png').convert_alpha()
+        self.image = pygame.image.load('Assets/starship.png').convert()
         self.rect = self.image.get_rect()
         self.rect.y = y
         self.rect.x = x
@@ -48,21 +48,23 @@ class Ship(pygame.sprite.Sprite):
         if self.current_angle > 360:
             self.current_angle = 0
 
-    def update_angle(self, screen):
-        rot_image = pygame.transform.rotozoom(self.image, self.current_angle, 1)
-        rot_image.get_rect().center = rot_image.get_rect().center
-        rot_image.get_rect().center = (25, 25)
-        screen.blit(rot_image, (self.rect.x, self.rect.y))
-
     def get_ship_angle(self):
         return self.current_angle
 
     def update(self):
+        self.check()
+
         self.vel_y *= self.friction
         self.vel_x *= self.friction
 
         self.rect.x -= self.vel_x
         self.rect.y -= self.vel_y
+
+    def draw(self, screen):
+        rot_image = pygame.transform.rotozoom(self.image, self.current_angle, 1)
+        rot_image.get_rect().center = rot_image.get_rect().center
+        rot_image.get_rect().center = (25, 25)
+        screen.blit(rot_image, (self.rect.x, self.rect.y))
 
 
 class Bullet(pygame.sprite.Sprite):
