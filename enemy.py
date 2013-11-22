@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 import random
+import math
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -11,17 +12,24 @@ class Enemy(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('Assets/ufodark.png').convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.y = random.randint(100, 600) * -1
-        self.rect.x = random.randint(80, 720)
+
+        self.rect.x = int(800 * random.random())
+        self.rect.y = int(600 * random.random())
 
         self.pxlen = 80
 
-    def random_location(self):
-        location = random.randint(1, 4)
+        self.enemy_angle = random.randint(0, 360)
+        self.radians = (math.pi/180) * self.enemy_angle
 
+        self.velocity = random.randint(1, 5)
+
+        self.vel_x = math.sin(self.radians) * self.velocity
+        self.vel_y = math.cos(self.radians) * self.velocity
 
     def update(self):
-        self.rect.y += 2
+        self.rect.y -= self.vel_x
+        self.rect.x -= self.vel_y
+
         if self.rect.x < 0 - self.pxlen:
             self.rect.x = 800
         if self.rect.x > 800 + self.pxlen:
