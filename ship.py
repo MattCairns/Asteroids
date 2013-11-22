@@ -30,9 +30,9 @@ class Ship(pygame.sprite.Sprite):
             self.vel_x += math.sin(radians) * self.velocity
             self.vel_y += math.cos(radians) * self.velocity
         if keys[K_LEFT]:
-            self.current_angle += 2
+            self.current_angle += 5
         if keys[K_RIGHT]:
-            self.current_angle -= 2
+            self.current_angle -= 5
 
     def check(self):
         if self.rect.x < 0 - self.pxlen:
