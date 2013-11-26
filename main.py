@@ -18,7 +18,7 @@ clock = pygame.time.Clock()
 font = pygame.font.SysFont('Helvetica', 12)
 font2 = pygame.font.SysFont('Helvetica', 15)
 SCORE = 0
-
+game_over = False
 
 #Collidable objects for the player
 collide_sprites_list = pygame.sprite.Group()
@@ -31,6 +31,7 @@ bullets = []
 
 def main():
     global SCORE
+    global game_over
     while True:
         clock.tick(60)
         for event in pygame.event.get():
@@ -44,8 +45,6 @@ def main():
                     bullets.append(bullet)
 
         screen.fill((0, 0, 0))
-
-
 
         for bullet in bullets[:]:
             sprite_hit_list = pygame.sprite.spritecollide(bullet, collide_sprites_list, True)
@@ -63,6 +62,10 @@ def main():
                 print 'remove'
                 break
 
+        player_hit_test = pygame.sprite.spritecollide(player_ship, collide_sprites_list, True)
+        for hit in player_hit_test[:]:
+            game_over = True
+
         enemy.create_random_enemy(collide_sprites_list)
 
         collide_sprites_list.update()
@@ -78,10 +81,10 @@ def main():
         score_label = font2.render('Score: %d' % SCORE, 1, (255, 255, 255))
         screen.blit(score_label, (10, 30))
 
+        if game_over:
+            helper.game_over(screen)
 
         pygame.display.flip()
-
-
 
 main()
 
