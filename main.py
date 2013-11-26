@@ -3,6 +3,7 @@ from pygame.locals import *
 import sys
 import ship
 import enemy
+import helper
 
 pygame.init()
 
@@ -12,6 +13,12 @@ pygame.display.flip()
 
 #Initialize clock to control framerate
 clock = pygame.time.Clock()
+
+#Text in corner
+font = pygame.font.SysFont('Helvetica', 12)
+font2 = pygame.font.SysFont('Helvetica', 15)
+SCORE = 0
+
 
 #Collidable objects for the player
 collide_sprites_list = pygame.sprite.Group()
@@ -23,6 +30,7 @@ bullets = []
 
 
 def main():
+    global SCORE
     while True:
         clock.tick(60)
         for event in pygame.event.get():
@@ -38,7 +46,7 @@ def main():
         screen.fill((0, 0, 0))
 
 
-        #nhjyu
+
         for bullet in bullets[:]:
             sprite_hit_list = pygame.sprite.spritecollide(bullet, collide_sprites_list, True)
             bullet.update()
@@ -46,6 +54,7 @@ def main():
 
             for hit in sprite_hit_list[:]:
                 bullets.remove(bullet)
+                SCORE += 1
                 print 'collide'
                 break
 
@@ -62,6 +71,13 @@ def main():
         player_ship.controls()
         player_ship.draw(screen)
         player_ship.update()
+
+        #Display text
+        fps_label = font.render('FPS: %d' %(clock.get_fps()), 1, (255, 255, 255))
+        screen.blit(fps_label, (10, 10))
+        score_label = font2.render('Score: %d' % SCORE, 1, (255, 255, 255))
+        screen.blit(score_label, (10, 30))
+
 
         pygame.display.flip()
 
