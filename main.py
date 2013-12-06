@@ -35,8 +35,11 @@ def main():
     while True:
         clock.tick(60)
         for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE or event.type == pygame.QUIT:
+                if event.key == K_ESCAPE:
                     sys.exit()
                 if event.key == K_SPACE:
                     bullet = ship.Bullet(player_ship.rect.x,
@@ -81,7 +84,7 @@ def main():
         score_label = font2.render('Score: %d' % SCORE, 1, (255, 255, 255))
         screen.blit(score_label, (10, 30))
 
-        if game_over:
+        while game_over:
             helper.game_over(screen)
 
         pygame.display.flip()
