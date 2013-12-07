@@ -74,18 +74,10 @@ def main():
         collide_sprites_list.update()
         collide_sprites_list.draw(screen)
 
-        player_ship.controls()
         player_ship.draw(screen)
         player_ship.update()
 
-        #Display text
-        fps_label = font.render('FPS: %d' %(clock.get_fps()), 1, (255, 255, 255))
-        screen.blit(fps_label, (10, 10))
-        score_label = font2.render('Score: %d' % SCORE, 1, (255, 255, 255))
-        screen.blit(score_label, (10, 30))
-
-        while game_over:
-            helper.game_over(screen)
+        helper.hud_display(screen, font, clock, SCORE)
 
         pygame.display.flip()
 

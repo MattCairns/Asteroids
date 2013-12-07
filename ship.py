@@ -27,8 +27,10 @@ class Ship(pygame.sprite.Sprite):
         radians = (math.pi/180) * self.current_angle
         keys = pygame.key.get_pressed()
         if keys[K_UP]:
-            self.vel_x += math.sin(radians) * self.velocity
-            self.vel_y += math.cos(radians) * self.velocity
+            force_x = math.sin(radians) * self.velocity
+            force_y = math.cos(radians) * self.velocity
+            self.vel_x += force_x
+            self.vel_y += force_y
         if keys[K_LEFT]:
             self.current_angle += 5
         if keys[K_RIGHT]:
@@ -51,8 +53,14 @@ class Ship(pygame.sprite.Sprite):
     def get_ship_angle(self):
         return self.current_angle
 
+    def draw(self, screen):
+        rot_image = pygame.transform.rotozoom(self.image, self.current_angle, 1)
+        rect = rot_image.get_rect().center
+        screen.blit(rot_image, (self.rect.x-(rect[1]), self.rect.y-(rect[0])))
+
     def update(self):
         self.check()
+        self.controls()
 
         self.vel_y *= self.friction
         self.vel_x *= self.friction
@@ -60,10 +68,7 @@ class Ship(pygame.sprite.Sprite):
         self.rect.x -= self.vel_x
         self.rect.y -= self.vel_y
 
-    def draw(self, screen):
-        rot_image = pygame.transform.rotozoom(self.image, self.current_angle, 1)
-        rect = rot_image.get_rect().center
-        screen.blit(rot_image, (self.rect.x-(rect[1]), self.rect.y-(rect[0])))
+
 
 
 class Bullet(pygame.sprite.Sprite):
@@ -73,9 +78,7 @@ class Bullet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         self.bullet_angle = angle
-        self.radians = (math.pi/180) * self.bullet_angle
-
-
+        self.radians = (math.pi/180) * self.bullet_angl
 
         self.velocity = 10
 
@@ -86,7 +89,6 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.y = y
 
     def update(self):
-
         self.rect.y -= self.vel_y
         self.rect.x -= self.vel_x
 
